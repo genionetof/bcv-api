@@ -1,3 +1,4 @@
+// @ts-types="npm:@types/express@latest"
 import express from "npm:express@latest";
 import {getCurrencyFromBCV, Currency} from "jsr:@quikiesamus/scrape-bcv"
 
@@ -11,18 +12,17 @@ type CurrencyResponse = {
     [currency: string]: number 
 }
 
-app.get("/currency", (req, res) => {
+app.get("/currency", (_req, res) => {
     const response: CurrencyResponse = {};
     const promises = Object.entries(Currency).map(async (currencyEnum) => {
         const currency = await getCurrencyFromBCV(currencyEnum[1]);
-        console.log(currency);
         response[currencyEnum[0]] = currency;
     });
     Promise.all(promises).then(() => res.json(response));
 });
 
 app.get("/currency/:name", (req, res) => {
-    const name: keyof typeof Currency = req.params.name; 
+    const name: keyof typeof Currency = req.params.name as keyof typeof Currency; 
     const response: CurrencyResponse = {};
     getCurrencyFromBCV(Currency[name]).then((currencyValue) => {
         response[Currency[name]] = currencyValue;
@@ -34,7 +34,7 @@ app.get("/currency/:name", (req, res) => {
     });
 })
 
-app.all("*", (req, res) => {
+app.all("*", (_req, res) => {
     res.type("text");
     res.status(404).send("not found");
     res.end();
