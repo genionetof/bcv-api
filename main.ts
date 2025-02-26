@@ -1,7 +1,12 @@
 import express from "npm:express@latest";
 import {getCurrencyFromBCV, Currency} from "jsr:@quikiesamus/scrape-bcv"
+
 const app = express();
-console.log(Deno.env.toObject());
+const PORT = (Deno.env.get("PORT")) || 3000;
+
+/**
+ * This is the representation of the response made by the server
+ */
 type CurrencyResponse = {
     [currency: string]: number 
 }
@@ -35,4 +40,4 @@ app.all("*", (req, res) => {
     res.end();
 })
 
-app.listen(12345, () => console.log("Server running on port 8000"));
+app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));

@@ -1,9 +1,9 @@
 {
   "tasks": {
-    "dev": "deno run -A --watch --unsafely-ignore-certificate-errors main.ts"
+    "dev": "deno run --env-file=.env -A --watch --unsafely-ignore-certificate-errors main.ts"
   },
   "imports": {
     "@quikiesamus/scrape-bcv": "jsr:@quikiesamus/scrape-bcv@^1.0.1",
-    "express": "npm:express@^4.21.2",
+    "express": "npm:express@^4.21.2"
   }
 }
