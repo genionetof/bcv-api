@@ -1,7 +1,7 @@
 import express from "npm:express@latest";
 import {getCurrencyFromBCV, Currency} from "jsr:@quikiesamus/scrape-bcv"
 const app = express();
-
+console.log(Deno.env.toObject());
 type CurrencyResponse = {
     [currency: string]: number 
 }
@@ -24,7 +24,7 @@ app.get("/currency/:name", (req, res) => {
         res.json(response);
     }).catch((err) => {
         res.type("text");
-        res.status(400).send(`${name} not found. ${err.toString()}`);
+        res.status(404).send(`${name} not found. ${err.toString()}`);
         res.end();
     });
 })
@@ -35,4 +35,4 @@ app.all("*", (req, res) => {
     res.end();
 })
 
-app.listen(8000, () => console.log("Server running on port 8000"));
+app.listen(12345, () => console.log("Server running on port 8000"));
