@@ -25,7 +25,7 @@ app.get("/currency/:name", (req, res) => {
     const name: keyof typeof Currency = req.params.name as keyof typeof Currency; 
     const response: CurrencyResponse = {};
     getCurrencyFromBCV(Currency[name]).then((currencyValue) => {
-        response[Currency[name]] = currencyValue;
+        response[name] = currencyValue;
         res.json(response);
     }).catch((err) => {
         res.type("text");
