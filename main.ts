@@ -12,7 +12,7 @@ type CurrencyResponse = {
     [currency: string]: number 
 }
 
-app.get("/currency", (_req, res) => {
+app.get("/currencies", (_req, res) => {
     const response: CurrencyResponse = {};
     const promises = Object.entries(Currency).map(async (currencyEnum) => {
         const currency = await getCurrencyFromBCV(currencyEnum[1]);
@@ -21,7 +21,7 @@ app.get("/currency", (_req, res) => {
     Promise.all(promises).then(() => res.json(response));
 });
 
-app.get("/currency/:name", (req, res) => {
+app.get("/currencies/:name", (req, res) => {
     const name: keyof typeof Currency = req.params.name as keyof typeof Currency; 
     const response: CurrencyResponse = {};
     getCurrencyFromBCV(Currency[name]).then((currencyValue) => {
